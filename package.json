@@ -1,0 +1,40 @@
+{
+  "name": "crawler-mercado-livre",
+  "version": "1.0.0",
+  "description": "Crawler para buscar produtos no Mercado Livre",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegogava/crawler-mercado-livre.git"
+  },
+  "author": "Diego Almeida Gava",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diegogava/crawler-mercado-livre/issues"
+  },
+  "homepage": "https://github.com/diegogava/crawler-mercado-livre#readme",
+  "dependencies": {
+    "axios": "^0.19.1",
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "chrome-aws-lambda": "^2.0.2",
+    "consign": "^0.1.6",
+    "express": "^4.17.1",
+    "fetch-timeout": "0.0.2",
+    "morgan": "^1.7.0",
+    "node-fetch": "^2.6.0",
+    "puppeteer-core": "^2.1.0",
+    "qs": "^6.9.1",
+    "query-selector": "^2.0.0",
+    "querystring": "^0.2.0",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4",
+    "puppeteer": "^2.1.1"
+  }
+}
