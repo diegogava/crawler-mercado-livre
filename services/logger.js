@@ -1,5 +1,6 @@
 const winston = require('winston');
 const fs = require('fs');
+// Caso a pasta logs não exista, então cria uma.
 if (!fs.existsSync('logs')) {
 	fs.mkdirSync('logs');
 }
