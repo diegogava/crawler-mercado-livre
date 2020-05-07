@@ -20,7 +20,13 @@ module.exports = (app) => {
 			res.status(200).send(JSON.stringify(list));
 		})
 		.catch(error => {
-			res.status(400).send("Something went wrong!");
+			console.log('Erro:');
+			console.log(error);
+			const errorMsg = {
+				"error":"error",
+				"message":"Something went wrong!"
+			};
+			res.status(400).send(JSON.stringify(errorMsg));
 		})
 		/*console.log(`Return Robot:`);
 		console.log(returnRobot);
