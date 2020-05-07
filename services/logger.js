@@ -7,7 +7,7 @@ module.exports = new winston.Logger({
 	transports: [
 		new winston.transports.File({
 			level: "info",
-			filename: "logs/teste.log",
+			filename: "logs/crawler-log.log",
 			maxsize: 100000,
 			maxFiles: 10
 		})

@@ -3,16 +3,12 @@ const puppeteer = require('puppeteer');
 
 class Robot {
 	async search(params) {
-		const search = params.search;
-		const limit = params.limit;
 		let itemsResult = [];
 		let itemsResultAux = [];
 		let counterMax = 0;
+		const search = params.search;
+		const limit = params.limit;
 		const maxIterations = 50;
-		/*console.log('search');
-		console.log(search);
-		console.log('limit');
-		console.log(limit);*/
 		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
 		const url = "https://www.mercadolivre.com.br/";
@@ -30,9 +26,7 @@ class Robot {
 						await page.type(".nav-search-input", search);
 						await page.keyboard.press("Enter");
 						await page.waitForNavigation();
-						//console.log('New Page URL:', page.url());
 						await page.click(".view-option-stack");
-						//console.log('New Page URL:', page.url());
 						return await page.waitForSelector("#searchResults")
 							.then(async () => {
 								while ((limit > itemsResult.length) && (counterMax < maxIterations)) {
@@ -51,7 +45,8 @@ class Robot {
 											const priceDecimals = item.getElementsByClassName('price__decimals')[0];
 											let price = null;
 											if (priceFraction && priceDecimals) {
-												price = priceFraction.innerText.replace('.', '') + '.' + priceDecimals.innerText.replace('.', '');
+												price = priceFraction.innerText.replace('.', '')
+													+ '.' + priceDecimals.innerText.replace('.', '');
 											} else if (priceFraction) {
 												price = priceFraction.innerText.replace('.', '');
 											}
@@ -109,12 +104,6 @@ class Robot {
 										itemsResultAux = itemsResultAux.slice(0, (limit - itemsResult.length));
 									}
 									itemsResult = itemsResult.concat(itemsResultAux);
-									console.log('limit:');
-									console.log(limit);
-									console.log('itemsResultAux.length:');
-									console.log(itemsResultAux.length);
-									console.log('itemsResult.length:');
-									console.log(itemsResult.length);
 									if (limit > itemsResult.length) {
 										if (await page.$('a.andes-pagination__link.prefetch') !== null) {
 											await page.click("a.andes-pagination__link.prefetch");
@@ -127,23 +116,13 @@ class Robot {
 										break;
 									}
 								}
-								/*console.log('itemsResult.length:');
-								console.log(itemsResult.length);
-								console.log('typeof itemsResult:');
-								console.log(typeof itemsResult);*/
 								if (limit < itemsResult.length) {
 									itemsResult = itemsResult.slice(0, limit);
 								}
-								/*console.log('itemsResult.length (DEPOIS):');
-								console.log(itemsResult.length);*/
-								/*console.log('itemsResult');
-								console.log(itemsResult);*/
 								return itemsResult;
 						});
 				});
 		})
-		/*console.log('Lista Final:');
-		console.log(list);*/
 		await browser.close();
 		return list;
 	}
