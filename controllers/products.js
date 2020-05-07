@@ -17,6 +17,7 @@ module.exports = (app) => {
 			console.log(list);
 			console.log('typeof list');
 			console.log(typeof list);*/
+			console.log('OK');
 			res.status(200).send(JSON.stringify(list));
 		})
 		.catch(error => {

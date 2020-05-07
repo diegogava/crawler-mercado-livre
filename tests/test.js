@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 {
 	const search = 'computador';
 	//const limit = 120;
-	const limit = 10;
+	const limit = 100;
 	const browser = await puppeteer.launch();
 	const page = await browser.newPage();
 	let url = "https://www.mercadolivre.com.br/";
@@ -26,12 +26,11 @@ const puppeteer = require('puppeteer');
 					await page.type(".nav-search-input", search);
 					await page.keyboard.press("Enter");
 					await page.waitForNavigation();
-					console.log('New Page URL:', page.url());
+					//console.log('New Page URL:', page.url());
 					await page.click(".view-option-stack");
-					console.log('New Page URL:', page.url());
+					//console.log('New Page URL:', page.url());
 					return await page.waitForSelector("#searchResults")
 						.then(async () => {
-
 							while ((limit > itemsResult.length) && (counterMax < maxIterations)) {
 								counterMax++;
 								itemsResultAux = [];
@@ -46,11 +45,6 @@ const puppeteer = require('puppeteer');
 									return items.map(item => {
 										const priceFraction = item.getElementsByClassName('price__fraction')[0];
 										const priceDecimals = item.getElementsByClassName('price__decimals')[0];
-										/*console.log('item.innerHTML');
-										console.log(item.innerHTML);
-										console.log('priceFraction.innerHTML');
-										console.log(priceFraction.innerHTML);*/
-										/*console.log(JSON.stringify(priceDecimals));*/
 										let price = null;
 										if (priceFraction && priceDecimals) {
 											price = priceFraction.innerText.replace('.', '') + '.' + priceDecimals.innerText.replace('.', '');
@@ -79,62 +73,50 @@ const puppeteer = require('puppeteer');
 											/\s*por\s/g,
 											''
 										  );
-										/*console.log('item sem por');
-										console.log(retorno);*/
 										return retorno;
 									});
 								});
-								/*console.log('itemLink:');
-								console.log(itemLink);
-								console.log('itemName:');
-								console.log(itemName);
-								console.log('itemPrice:');
-								console.log(itemPrice);
-								console.log('itemStatus:');
-								console.log(itemStatus);
-								console.log('itemStore:');
-								console.log(itemStore);
-								console.log(`Total items links: ${itemLink.length}`);
-								console.log(`Total items name: ${itemName.length}`);
-								console.log(`Total items price: ${itemPrice.length}`);
-								console.log(`Total items state: ${itemStatus.length}`);
-								console.log(`Total items store: ${itemStore.length}`);*/
-
+								console.log('itemName.length:')
+								console.log(itemName.length)
 								itemName.forEach(item => {
-									//itemsResult[] = {};
 									itemsResultAux.push({name: item.toString()});
-									//count++;
 								});
-								/*console.log('itemsResult:');
-								console.log(itemsResult);
-								console.log('typeof itemsResult:');
-								console.log(typeof itemsResult);*/
 								itemsResultAux.forEach((item, index) => {
 									if (itemLink[index]) {
+										//item.push({link: itemLink[index].toString()});
 										item['link'] = itemLink[index].toString();
 									} else {
+										//item.push({link: null});
 										item['link'] = null;
 									}
 									if (itemPrice[index]) {
-										item['price'] = itemLink[index].toString();
+										//item.push({price: itemPrice[index].toString()});
+										item['price'] = itemPrice[index].toString();
 									} else {
+										//item.push({price: null});
 										item['price'] = null;
 									}
 									if (itemStore[index]) {
+										//item.push({store: itemStore[index].toString()});
 										item['store'] = itemStore[index].toString();
 									} else {
+										//item.push({store: null});
 										item['store'] = null;
 									}
 									if (itemStatus[index]) {
+										//item.push({state: itemStatus[index].toString()});
 										item['state'] = itemStatus[index].toString();
 									} else {
+										//item.push({state: null});
 										item['state'] = null;
 									}
-									//item = JSON.stringify(item);
 								});
 
 
 								if ((itemsResult.length + itemsResultAux.length) > limit) {
+									console.log('Ultrapassou o limite!');
+									console.log('Novo tamanho: ');
+									console.log(limit - itemsResult.length);
 									itemsResultAux = itemsResultAux.slice(0, (limit - itemsResult.length));
 								}
 
@@ -149,16 +131,19 @@ const puppeteer = require('puppeteer');
 								if (limit > itemsResult.length) {
 
 									if (await page.$('a.andes-pagination__link.prefetch') !== null) {
-										//console.log('ENCONTRADO');
+										console.log('ENCONTRADO');
 										await page.click("a.andes-pagination__link.prefetch");
-										//console.log('New Page URL:', page.url());
-										//await page.screenshot({path: 'domain.png'});
+										console.log('New Page URL:', page.url());
+										await page.waitFor(1000);
+										await page.screenshot({path: 'domain.png'});
 										//await page.click(".view-option-stack");
 									} else {
 										console.log('NÃO ENCONTRADO');
 										break;
 									}
-
+								}
+								if (itemsResultAux.length === 0) {
+									break;
 								}
 							}
 
@@ -172,16 +157,16 @@ const puppeteer = require('puppeteer');
 							/*console.log('itemsResult.length (DEPOIS):');
 							console.log(itemsResult.length);*/
 
-
+							await page.screenshot({path: 'domain.png'});
 							return itemsResult;
 							//console.log(`Got ${data.length} records`);
 					});
-					//await page.screenshot({path: 'domain.png'});
+
 			});
 			//return result;
 	})
-	/*list = JSON.stringify(list);
-	console.log('Lista Final:');
+	//list = JSON.stringify(list);
+	/*console.log('Lista Final:');
 	console.log(list);*/
 	await browser.close();
 })();
