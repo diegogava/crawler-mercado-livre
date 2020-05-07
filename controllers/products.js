@@ -11,12 +11,20 @@ module.exports = (app) => {
 			search: search,
 			limit: limit
 		}
-		const returnRobot = Robot.search(params).then((value) => {
-			console.log(value)
-		});
-		console.log(`Return Robot:`);
+		const returnRobot = Robot.search(params)
+		.then(list => {
+			/*console.log('Lista:');
+			console.log(list);
+			console.log('typeof list');
+			console.log(typeof list);*/
+			res.status(200).send(JSON.stringify(list));
+		})
+		.catch(error => {
+			res.status(400).send("Something went wrong!");
+		})
+		/*console.log(`Return Robot:`);
 		console.log(returnRobot);
-		res.send('OK');
+		res.status(200).json(JSON.stringify(returnRobot));*/
 	});
 
 	app.use((req, res, next) => {

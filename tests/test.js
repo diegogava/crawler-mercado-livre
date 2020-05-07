@@ -11,7 +11,8 @@ const puppeteer = require('puppeteer');
 			console.log(`${i}: ${msg.args()[i]}`);
 		}
 	});
-	const list = await page
+	let list = {};
+	list = await page
 		.waitForSelector("#nav-header-menu-switch")
 		.then(async () => {
 			return await page.click(".nav-search-input")
@@ -68,12 +69,12 @@ const puppeteer = require('puppeteer');
 										/\s*por\s/g,
 										''
 									  );
-									console.log('item sem por');
-									console.log(retorno);
+									/*console.log('item sem por');
+									console.log(retorno);*/
 									return retorno;
 								});
 							});
-							console.log('itemLink:');
+							/*console.log('itemLink:');
 							console.log(itemLink);
 							console.log('itemName:');
 							console.log(itemName);
@@ -87,38 +88,48 @@ const puppeteer = require('puppeteer');
 							console.log(`Total items name: ${itemName.length}`);
 							console.log(`Total items price: ${itemPrice.length}`);
 							console.log(`Total items state: ${itemStatus.length}`);
-							console.log(`Total items store: ${itemStore.length}`);
+							console.log(`Total items store: ${itemStore.length}`);*/
 							let itemsResult = [];
 							let count = 0;
 							itemName.forEach(item => {
-								itemsResult[count] = [];
-								itemsResult[count]['name'] = item;
+								itemsResult[count] = {};
+								itemsResult[count].name = item.toString();
 								count++;
 							});
+							/*console.log('itemsResult:');
+							console.log(itemsResult);
+							console.log('typeof itemsResult:');
+							console.log(typeof itemsResult);*/
 							itemsResult.forEach((item, index) => {
 								if (itemLink[index]) {
-									item['link'] = itemLink[index];
+									item['link'] = itemLink[index].toString();
 								} else {
 									item['link'] = null;
 								}
 								if (itemPrice[index]) {
-									item['price'] = itemLink[index];
+									item['price'] = itemLink[index].toString();
 								} else {
 									item['price'] = null;
 								}
 								if (itemStore[index]) {
-									item['store'] = itemStore[index];
+									item['store'] = itemStore[index].toString();
 								} else {
 									item['store'] = null;
 								}
 								if (itemStatus[index]) {
-									item['state'] = itemStatus[index];
+									item['state'] = itemStatus[index].toString();
 								} else {
 									item['state'] = null;
 								}
+								//item = JSON.stringify(item);
 							});
 							/*console.log('itemsResult');
 							console.log(itemsResult);*/
+							if (limit < itemsResult.length) {
+								itemsResult = itemsResult.slice(0, limit);
+							}
+							console.log('itemsResult.length (DEPOIS):');
+							console.log(itemsResult.length);
 							return itemsResult;
 							//console.log(`Got ${data.length} records`);
 					});
@@ -126,6 +137,7 @@ const puppeteer = require('puppeteer');
 			});
 			//return result;
 	})
+	list = JSON.stringify(list);
 	console.log('Lista Final:');
 	console.log(list);
 	await browser.close();
