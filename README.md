@@ -1,29 +1,32 @@
 # Crawler Mercado Livre
-Crawler (coletor) capaz de buscar uma lista de produtos no Mercado Livre.
 
-# Instruções
+Crawler (collector) capable of searching a list of products in 'Mercado Livre' plataform.
 
-### Requisitos
+# Instructions
 
-É requerido [Node.js](https://nodejs.org/) v10+ para executar.
+### Requirements
 
-### Execução
+[Node.js](https://nodejs.org/) v10+ is required to run the project.
 
-* Clone o projeto ou extraia o arquivo zipado, e navegue até a pasta destino.
-* Instale as dependências e execute o servidor.
+### Running
+
+* Clone the project or extract the zipped file, and browse to the destination folder.
+* Install the dependencies and run the server.
+
 
 ```sh
 $ npm install
 $ npm start
 ```
 
-### Testes
+### Tests
 
-Enquanto o servidor estiver rodando, faça uma requisição POST (de acordo com a especificação) no endpoint http://localhost:3000/, podendo utilizar softwares como Postman, algum navegador, ou mesmo CURL, por exemplo.
+While the server is running, make a POST request (according to the specification) at the endpoint http://localhost:3000/, being able to use software such as Postman, some browser, or even CURL, for example.
 
-### Observações
+### Notes
 
-Caso esteja em um ambiente Linux e tenha processos do puppeteer que não foram finalizados por algum motivo, execute o seguinte comando:
+If you are in a Linux environment and have puppeteer processes that have not been terminated for any reason, run the following command:
+
 ```sh
 $ ps aux | awk '/puppeteer/ { print $2 } ' | xargs kill -9
 ```

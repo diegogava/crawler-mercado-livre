@@ -32,6 +32,9 @@
     "querystring": "^0.2.0",
     "winston": "^2.2.0",
     "nodemon": "^1.18.4",
-    "puppeteer": "^2.1.1"
+    "puppeteer": "^2.1.1",
+    "dot-prop": ">=4.2.1",
+    "lodash": ">=4.17.19",
+    "node-fetch": ">=2.6.1"
   }
 }
