@@ -1,7 +1,7 @@
 {
   "name": "crawler-mercado-livre",
   "version": "1.0.0",
-  "description": "Crawler para buscar produtos no Mercado Livre",
+  "description": "Crawler to search products on 'Mercado Livre' plataform",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

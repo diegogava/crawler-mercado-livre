@@ -1,44 +1,42 @@
-const logger = require('../services/logger.js');
-const Crawler = require('../services/crawler.js');
+const logger = require('../services/logger')
+const Crawler = require('../services/crawler')
+const Response = require('../utils/response')
 
-module.exports = (app) => {
+module.exports = app => {
 	app.post('/', (req, res) => {
-		// Recupera os parâmetros enviados via POST e os guarda em um objeto.
-		const search = req.body["search"];
-		const limit = req.body["limit"];
+        // Save the parameters sent by POST
 		const params = {
-			search: search,
-			limit: limit
+			search: req.body.search || null,
+			limit: req.body.limit || null
 		}
-		// Chama o serviço de Crawler para fazer a busca na plataforma Mercado Livre.
+		// Call crawler to scrap on 'Mercado Livre'
 		const returnCrawler = Crawler.search(params)
 			.then(list => {
-				//console.log('OK');
-				res.status(200).send(JSON.stringify(list));
+				//console.log('OK')
+				res.status(200).send(JSON.stringify(list))
 			})
 			.catch(error => {
-				/*console.log('Erro:');
-				console.log(error);*/
+				console.log(error)
 				const errorMsg = {
-					"error":"error",
-					"message":"Something went wrong!"
-				};
-				res.status(400).send(JSON.stringify(errorMsg));
+					error: 'error',
+					message: 'Something went wrong!'
+				}
+				res.status(400).send(JSON.stringify(errorMsg))
 			})
-	});
-	// Middleware para o tratamento de erros na requisição POST.
+	})
+	// Middleware for handling errors in the POST request.
 	app.use((req, res, next) => {
-		const error = new Error("Not found");
-		error.status = 404;
-		next(error);
-	});
-	// Middleware para o tratamento de erros no servidor.
+		const error = new Error('Not found')
+		error.status = 404
+		next(error)
+	})
+	// Middleware for handling errors on the server.
 	app.use((error, req, res, next) => {
 		res.status(error.status || 500).send({
 			error: {
 				status: error.status || 500,
 				message: error.message || 'Internal Server Error',
 			},
-		});
-	});
+		})
+	})
 }

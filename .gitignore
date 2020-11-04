@@ -108,3 +108,6 @@ dist
 *.png
 *.jpg
 *.jpeg
+
+# JSHINT
+.jshintrc
